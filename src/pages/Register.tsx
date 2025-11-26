@@ -4,9 +4,6 @@ import { useAuth } from '@/context/AuthContext';
 import { authApi } from '@/services/api';
 import { toast } from 'react-toastify';
 import { Shield, Mail, Lock, User, Loader2, Eye, EyeOff, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +23,6 @@ const Register = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error when user types
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -115,17 +111,21 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
+                <label htmlFor="firstName" className="block text-sm font-medium text-foreground">
+                  First Name
+                </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
+                  <input
                     id="firstName"
                     name="firstName"
                     type="text"
                     placeholder="John"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className={`pl-10 input-focus ${errors.firstName ? 'border-destructive' : ''}`}
+                    className={`w-full h-10 pl-10 pr-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                      errors.firstName ? 'border-destructive' : 'border-input'
+                    }`}
                   />
                 </div>
                 {errors.firstName && (
@@ -134,15 +134,19 @@ const Register = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input
+                <label htmlFor="lastName" className="block text-sm font-medium text-foreground">
+                  Last Name
+                </label>
+                <input
                   id="lastName"
                   name="lastName"
                   type="text"
                   placeholder="Doe"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className={`input-focus ${errors.lastName ? 'border-destructive' : ''}`}
+                  className={`w-full h-10 px-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                    errors.lastName ? 'border-destructive' : 'border-input'
+                  }`}
                 />
                 {errors.lastName && (
                   <p className="text-xs text-destructive">{errors.lastName}</p>
@@ -151,17 +155,21 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <label htmlFor="email" className="block text-sm font-medium text-foreground">
+                Email Address
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
+                <input
                   id="email"
                   name="email"
                   type="email"
                   placeholder="you@example.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`pl-10 input-focus ${errors.email ? 'border-destructive' : ''}`}
+                  className={`w-full h-10 pl-10 pr-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                    errors.email ? 'border-destructive' : 'border-input'
+                  }`}
                 />
               </div>
               {errors.email && (
@@ -170,17 +178,21 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <label htmlFor="password" className="block text-sm font-medium text-foreground">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
+                <input
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`pl-10 pr-10 input-focus ${errors.password ? 'border-destructive' : ''}`}
+                  className={`w-full h-10 pl-10 pr-10 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                    errors.password ? 'border-destructive' : 'border-input'
+                  }`}
                 />
                 <button
                   type="button"
@@ -196,17 +208,21 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground">
+                Confirm Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
+                <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className={`pl-10 input-focus ${errors.confirmPassword ? 'border-destructive' : ''}`}
+                  className={`w-full h-10 pl-10 pr-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                    errors.confirmPassword ? 'border-destructive' : 'border-input'
+                  }`}
                 />
               </div>
               {errors.confirmPassword && (
@@ -214,20 +230,20 @@ const Register = () => {
               )}
             </div>
 
-            <Button
+            <button
               type="submit"
               disabled={isLoading}
-              className="w-full gradient-primary hover:opacity-90 transition-opacity h-11 font-medium mt-6"
+              className="w-full h-11 gradient-primary text-primary-foreground font-medium rounded-md hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 animate-spin" />
                   Creating account...
                 </>
               ) : (
                 'Create Account'
               )}
-            </Button>
+            </button>
           </form>
 
           <p className="mt-6 text-center text-muted-foreground">

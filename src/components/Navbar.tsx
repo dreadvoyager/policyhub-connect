@@ -11,7 +11,6 @@ import {
   X,
   User
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 
 const Navbar = () => {
@@ -79,15 +78,13 @@ const Navbar = () => {
                 {user?.firstName} {user?.lastName}
               </span>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
               onClick={handleLogout}
-              className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
             >
-              <LogOut className="w-4 h-4 mr-2" />
+              <LogOut className="w-4 h-4" />
               Logout
-            </Button>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}

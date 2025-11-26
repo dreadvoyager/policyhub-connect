@@ -4,9 +4,6 @@ import { useAuth } from '@/context/AuthContext';
 import { authApi } from '@/services/api';
 import { toast } from 'react-toastify';
 import { Shield, Mail, Lock, Loader2, Eye, EyeOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -112,16 +109,20 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <label htmlFor="email" className="block text-sm font-medium text-foreground">
+                Email Address
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
+                <input
                   id="email"
                   type="email"
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`pl-10 input-focus ${errors.email ? 'border-destructive' : ''}`}
+                  className={`w-full h-10 pl-10 pr-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                    errors.email ? 'border-destructive' : 'border-input'
+                  }`}
                 />
               </div>
               {errors.email && (
@@ -130,16 +131,20 @@ const Login = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <label htmlFor="password" className="block text-sm font-medium text-foreground">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
+                <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`pl-10 pr-10 input-focus ${errors.password ? 'border-destructive' : ''}`}
+                  className={`w-full h-10 pl-10 pr-10 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                    errors.password ? 'border-destructive' : 'border-input'
+                  }`}
                 />
                 <button
                   type="button"
@@ -154,20 +159,20 @@ const Login = () => {
               )}
             </div>
 
-            <Button
+            <button
               type="submit"
               disabled={isLoading}
-              className="w-full gradient-primary hover:opacity-90 transition-opacity h-11 font-medium"
+              className="w-full h-11 gradient-primary text-primary-foreground font-medium rounded-md hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 animate-spin" />
                   Signing in...
                 </>
               ) : (
                 'Sign In'
               )}
-            </Button>
+            </button>
           </form>
 
           <p className="mt-8 text-center text-muted-foreground">
