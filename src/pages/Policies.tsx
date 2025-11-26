@@ -13,25 +13,9 @@ import {
   Edit2, 
   X,
   Loader2,
-  Search
+  Search,
+  ChevronDown
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 const policyTypes = ['Life', 'Health', 'Motor', 'Home', 'Travel', 'Business'];
 const policyStatuses = ['Active', 'Lapsed', 'Cancelled'];
@@ -89,19 +73,12 @@ const Policies = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: name === 'premiumAmt' ? parseFloat(value) || 0 : value,
     }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -220,82 +197,84 @@ const Policies = () => {
               Manage and track all your insurance policies
             </p>
           </div>
-          <Button onClick={openCreateModal} className="gradient-primary">
-            <Plus className="w-5 h-5 mr-2" />
+          <button
+            onClick={openCreateModal}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 gradient-primary text-primary-foreground font-medium rounded-md hover:opacity-90 transition-opacity"
+          >
+            <Plus className="w-5 h-5" />
             Add Policy
-          </Button>
+          </button>
         </div>
 
         {/* Filters */}
-        <Card className="border-0 shadow-card mb-6">
-          <CardContent className="p-4">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  placeholder="Search by insurer or type..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger className="w-full md:w-48">
-                  <SelectValue placeholder="Filter by type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  {policyTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+        <div className="bg-card rounded-lg shadow-card p-4 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <input
+                placeholder="Search by insurer or type..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full h-10 pl-10 pr-3 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
             </div>
-          </CardContent>
-        </Card>
+            <div className="relative">
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="w-full md:w-48 h-10 px-3 pr-8 rounded-md border border-input bg-background text-foreground appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
+              >
+                <option value="all">All Types</option>
+                {policyTypes.map((type) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+          </div>
+        </div>
 
         {/* Policies Grid */}
         {filteredPolicies.length === 0 ? (
-          <Card className="border-0 shadow-card">
-            <CardContent className="p-12 text-center">
-              <FileText className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
-              <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
-                No policies found
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                {searchTerm || filterType !== 'all'
-                  ? 'Try adjusting your filters'
-                  : 'Get started by adding your first policy'}
-              </p>
-              {!searchTerm && filterType === 'all' && (
-                <Button onClick={openCreateModal} className="gradient-primary">
-                  <Plus className="w-5 h-5 mr-2" />
-                  Add Your First Policy
-                </Button>
-              )}
-            </CardContent>
-          </Card>
+          <div className="bg-card rounded-lg shadow-card p-12 text-center">
+            <FileText className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
+            <h3 className="text-xl font-heading font-semibold text-foreground mb-2">
+              No policies found
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              {searchTerm || filterType !== 'all'
+                ? 'Try adjusting your filters'
+                : 'Get started by adding your first policy'}
+            </p>
+            {!searchTerm && filterType === 'all' && (
+              <button
+                onClick={openCreateModal}
+                className="inline-flex items-center gap-2 px-4 py-2 gradient-primary text-primary-foreground font-medium rounded-md hover:opacity-90 transition-opacity"
+              >
+                <Plus className="w-5 h-5" />
+                Add Your First Policy
+              </button>
+            )}
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPolicies.map((policy) => (
-              <Card key={policy.policyId} className="border-0 shadow-card card-hover">
-                <CardHeader className="pb-3">
+              <div key={policy.policyId} className="bg-card rounded-lg shadow-card card-hover">
+                <div className="p-6 pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className="p-2 rounded-lg bg-primary/10">
                         <FileText className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <CardTitle className="font-heading text-lg">{policy.insurer}</CardTitle>
+                        <h3 className="font-heading text-lg font-semibold text-foreground">{policy.insurer}</h3>
                         <p className="text-sm text-muted-foreground">{policy.policyType}</p>
                       </div>
                     </div>
                     <StatusBadge status={policy.status} type="policy" />
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
+                </div>
+                <div className="px-6 pb-6 space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center gap-2 text-sm">
                       <DollarSign className="w-4 h-4 text-muted-foreground" />
@@ -315,168 +294,198 @@ const Policies = () => {
                     </span>
                   </div>
                   <div className="pt-3 border-t border-border">
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <button
                       onClick={() => openEditModal(policy)}
-                      className="w-full"
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm border border-input rounded-md hover:bg-secondary transition-colors"
                     >
-                      <Edit2 className="w-4 h-4 mr-2" />
+                      <Edit2 className="w-4 h-4" />
                       Edit Policy
-                    </Button>
+                    </button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         )}
 
         {/* Add/Edit Modal */}
-        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="font-heading">
-                {editingPolicy ? 'Edit Policy' : 'Add New Policy'}
-              </DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="insurer">Insurer Name</Label>
-                <Input
-                  id="insurer"
-                  name="insurer"
-                  value={formData.insurer}
-                  onChange={handleChange}
-                  placeholder="e.g., State Farm"
-                  className={errors.insurer ? 'border-destructive' : ''}
-                />
-                {errors.insurer && (
-                  <p className="text-xs text-destructive">{errors.insurer}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="policyType">Policy Type</Label>
-                <Select
-                  value={formData.policyType}
-                  onValueChange={(value) => handleSelectChange('policyType', value)}
-                >
-                  <SelectTrigger className={errors.policyType ? 'border-destructive' : ''}>
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {policyTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.policyType && (
-                  <p className="text-xs text-destructive">{errors.policyType}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="premiumAmt">Premium Amount ($)</Label>
-                <Input
-                  id="premiumAmt"
-                  name="premiumAmt"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={formData.premiumAmt || ''}
-                  onChange={handleChange}
-                  placeholder="0.00"
-                  className={errors.premiumAmt ? 'border-destructive' : ''}
-                />
-                {errors.premiumAmt && (
-                  <p className="text-xs text-destructive">{errors.premiumAmt}</p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="startDate">Start Date</Label>
-                  <Input
-                    id="startDate"
-                    name="startDate"
-                    type="date"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    className={errors.startDate ? 'border-destructive' : ''}
-                  />
-                  {errors.startDate && (
-                    <p className="text-xs text-destructive">{errors.startDate}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="endDate">End Date</Label>
-                  <Input
-                    id="endDate"
-                    name="endDate"
-                    type="date"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    className={errors.endDate ? 'border-destructive' : ''}
-                  />
-                  {errors.endDate && (
-                    <p className="text-xs text-destructive">{errors.endDate}</p>
-                  )}
-                </div>
-              </div>
-
-              {editingPolicy && (
-                <div className="space-y-2">
-                  <Label htmlFor="status">Status</Label>
-                  <Select
-                    value={formData.status}
-                    onValueChange={(value) => handleSelectChange('status', value)}
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={closeModal} />
+            <div className="relative bg-card rounded-lg shadow-lg w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto animate-fade-in">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-heading text-xl font-semibold text-foreground">
+                    {editingPolicy ? 'Edit Policy' : 'Add New Policy'}
+                  </h2>
+                  <button
+                    onClick={closeModal}
+                    className="p-1 rounded-md hover:bg-secondary transition-colors"
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {policyStatuses.map((status) => (
-                        <SelectItem key={status} value={status}>
-                          {status}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
-              )}
+                
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-2">
+                    <label htmlFor="insurer" className="block text-sm font-medium text-foreground">
+                      Insurer Name
+                    </label>
+                    <input
+                      id="insurer"
+                      name="insurer"
+                      value={formData.insurer}
+                      onChange={handleChange}
+                      placeholder="e.g., State Farm"
+                      className={`w-full h-10 px-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                        errors.insurer ? 'border-destructive' : 'border-input'
+                      }`}
+                    />
+                    {errors.insurer && (
+                      <p className="text-xs text-destructive">{errors.insurer}</p>
+                    )}
+                  </div>
 
-              <div className="flex gap-3 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={closeModal}
-                  className="flex-1"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex-1 gradient-primary"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      {editingPolicy ? 'Updating...' : 'Creating...'}
-                    </>
-                  ) : editingPolicy ? (
-                    'Update Policy'
-                  ) : (
-                    'Create Policy'
+                  <div className="space-y-2">
+                    <label htmlFor="policyType" className="block text-sm font-medium text-foreground">
+                      Policy Type
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="policyType"
+                        name="policyType"
+                        value={formData.policyType}
+                        onChange={handleChange}
+                        className={`w-full h-10 px-3 pr-8 rounded-md border bg-background text-foreground appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer ${
+                          errors.policyType ? 'border-destructive' : 'border-input'
+                        }`}
+                      >
+                        <option value="">Select type</option>
+                        {policyTypes.map((type) => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    </div>
+                    {errors.policyType && (
+                      <p className="text-xs text-destructive">{errors.policyType}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="premiumAmt" className="block text-sm font-medium text-foreground">
+                      Premium Amount ($)
+                    </label>
+                    <input
+                      id="premiumAmt"
+                      name="premiumAmt"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={formData.premiumAmt || ''}
+                      onChange={handleChange}
+                      placeholder="0.00"
+                      className={`w-full h-10 px-3 rounded-md border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                        errors.premiumAmt ? 'border-destructive' : 'border-input'
+                      }`}
+                    />
+                    {errors.premiumAmt && (
+                      <p className="text-xs text-destructive">{errors.premiumAmt}</p>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label htmlFor="startDate" className="block text-sm font-medium text-foreground">
+                        Start Date
+                      </label>
+                      <input
+                        id="startDate"
+                        name="startDate"
+                        type="date"
+                        value={formData.startDate}
+                        onChange={handleChange}
+                        className={`w-full h-10 px-3 rounded-md border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                          errors.startDate ? 'border-destructive' : 'border-input'
+                        }`}
+                      />
+                      {errors.startDate && (
+                        <p className="text-xs text-destructive">{errors.startDate}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <label htmlFor="endDate" className="block text-sm font-medium text-foreground">
+                        End Date
+                      </label>
+                      <input
+                        id="endDate"
+                        name="endDate"
+                        type="date"
+                        value={formData.endDate}
+                        onChange={handleChange}
+                        className={`w-full h-10 px-3 rounded-md border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
+                          errors.endDate ? 'border-destructive' : 'border-input'
+                        }`}
+                      />
+                      {errors.endDate && (
+                        <p className="text-xs text-destructive">{errors.endDate}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {editingPolicy && (
+                    <div className="space-y-2">
+                      <label htmlFor="status" className="block text-sm font-medium text-foreground">
+                        Status
+                      </label>
+                      <div className="relative">
+                        <select
+                          id="status"
+                          name="status"
+                          value={formData.status}
+                          onChange={handleChange}
+                          className="w-full h-10 px-3 pr-8 rounded-md border border-input bg-background text-foreground appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
+                        >
+                          {policyStatuses.map((status) => (
+                            <option key={status} value={status}>{status}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                      </div>
+                    </div>
                   )}
-                </Button>
+
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="flex-1 h-10 px-4 border border-input rounded-md hover:bg-secondary transition-colors font-medium"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 h-10 px-4 gradient-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          {editingPolicy ? 'Updating...' : 'Creating...'}
+                        </>
+                      ) : editingPolicy ? (
+                        'Update Policy'
+                      ) : (
+                        'Create Policy'
+                      )}
+                    </button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </DialogContent>
-        </Dialog>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

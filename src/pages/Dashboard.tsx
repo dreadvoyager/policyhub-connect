@@ -10,14 +10,11 @@ import {
   FileText, 
   ClipboardList, 
   TrendingUp, 
-  Clock, 
   DollarSign,
   ArrowRight,
   Shield,
   AlertCircle
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -75,96 +72,88 @@ const Dashboard = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="card-hover border-0 shadow-card">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Total Policies</p>
-                  <p className="text-3xl font-bold text-foreground">{stats.totalPolicies}</p>
-                  <p className="text-sm text-success mt-1">
-                    {stats.activePolicies} active
-                  </p>
-                </div>
-                <div className="p-3 rounded-xl bg-primary/10">
-                  <FileText className="w-6 h-6 text-primary" />
-                </div>
+          <div className="bg-card rounded-lg shadow-card p-6 card-hover">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Total Policies</p>
+                <p className="text-3xl font-bold text-foreground">{stats.totalPolicies}</p>
+                <p className="text-sm text-success mt-1">
+                  {stats.activePolicies} active
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-3 rounded-xl bg-primary/10">
+                <FileText className="w-6 h-6 text-primary" />
+              </div>
+            </div>
+          </div>
 
-          <Card className="card-hover border-0 shadow-card">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Total Claims</p>
-                  <p className="text-3xl font-bold text-foreground">{stats.totalClaims}</p>
-                  <p className="text-sm text-warning mt-1">
-                    {stats.pendingClaims} pending
-                  </p>
-                </div>
-                <div className="p-3 rounded-xl bg-accent/10">
-                  <ClipboardList className="w-6 h-6 text-accent" />
-                </div>
+          <div className="bg-card rounded-lg shadow-card p-6 card-hover">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Total Claims</p>
+                <p className="text-3xl font-bold text-foreground">{stats.totalClaims}</p>
+                <p className="text-sm text-warning mt-1">
+                  {stats.pendingClaims} pending
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-3 rounded-xl bg-accent/10">
+                <ClipboardList className="w-6 h-6 text-accent" />
+              </div>
+            </div>
+          </div>
 
-          <Card className="card-hover border-0 shadow-card">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Total Premium</p>
-                  <p className="text-3xl font-bold text-foreground">
-                    ${stats.totalPremium.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">Annual</p>
-                </div>
-                <div className="p-3 rounded-xl bg-info/10">
-                  <TrendingUp className="w-6 h-6 text-info" />
-                </div>
+          <div className="bg-card rounded-lg shadow-card p-6 card-hover">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Total Premium</p>
+                <p className="text-3xl font-bold text-foreground">
+                  ${stats.totalPremium.toLocaleString()}
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">Annual</p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-3 rounded-xl bg-info/10">
+                <TrendingUp className="w-6 h-6 text-info" />
+              </div>
+            </div>
+          </div>
 
-          <Card className="card-hover border-0 shadow-card">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Claims Approved</p>
-                  <p className="text-3xl font-bold text-foreground">
-                    ${stats.totalClaimAmount.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-success mt-1">Total paid</p>
-                </div>
-                <div className="p-3 rounded-xl bg-success/10">
-                  <DollarSign className="w-6 h-6 text-success" />
-                </div>
+          <div className="bg-card rounded-lg shadow-card p-6 card-hover">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Claims Approved</p>
+                <p className="text-3xl font-bold text-foreground">
+                  ${stats.totalClaimAmount.toLocaleString()}
+                </p>
+                <p className="text-sm text-success mt-1">Total paid</p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-3 rounded-xl bg-success/10">
+                <DollarSign className="w-6 h-6 text-success" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Policies */}
-          <Card className="border-0 shadow-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-4">
-              <CardTitle className="font-heading text-lg">Recent Policies</CardTitle>
+          <div className="bg-card rounded-lg shadow-card">
+            <div className="flex items-center justify-between p-6 pb-4">
+              <h3 className="font-heading text-lg font-semibold text-foreground">Recent Policies</h3>
               <Link to="/policies">
-                <Button variant="ghost" size="sm" className="text-primary">
-                  View all <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
+                <button className="text-primary text-sm font-medium hover:underline flex items-center gap-1">
+                  View all <ArrowRight className="w-4 h-4" />
+                </button>
               </Link>
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div className="px-6 pb-6">
               {recentPolicies.length === 0 ? (
                 <div className="text-center py-8">
                   <Shield className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
                   <p className="text-muted-foreground">No policies yet</p>
                   <Link to="/policies">
-                    <Button variant="outline" size="sm" className="mt-4">
+                    <button className="mt-4 px-4 py-2 text-sm border border-input rounded-md hover:bg-secondary transition-colors">
                       Add your first policy
-                    </Button>
+                    </button>
                   </Link>
                 </div>
               ) : (
@@ -188,28 +177,28 @@ const Dashboard = () => {
                   ))}
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Recent Claims */}
-          <Card className="border-0 shadow-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-4">
-              <CardTitle className="font-heading text-lg">Recent Claims</CardTitle>
+          <div className="bg-card rounded-lg shadow-card">
+            <div className="flex items-center justify-between p-6 pb-4">
+              <h3 className="font-heading text-lg font-semibold text-foreground">Recent Claims</h3>
               <Link to="/claims">
-                <Button variant="ghost" size="sm" className="text-primary">
-                  View all <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
+                <button className="text-primary text-sm font-medium hover:underline flex items-center gap-1">
+                  View all <ArrowRight className="w-4 h-4" />
+                </button>
               </Link>
-            </CardHeader>
-            <CardContent>
+            </div>
+            <div className="px-6 pb-6">
               {recentClaims.length === 0 ? (
                 <div className="text-center py-8">
                   <ClipboardList className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
                   <p className="text-muted-foreground">No claims submitted</p>
                   <Link to="/claims">
-                    <Button variant="outline" size="sm" className="mt-4">
+                    <button className="mt-4 px-4 py-2 text-sm border border-input rounded-md hover:bg-secondary transition-colors">
                       File a claim
-                    </Button>
+                    </button>
                   </Link>
                 </div>
               ) : (
@@ -237,38 +226,40 @@ const Dashboard = () => {
                   ))}
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Quick Actions */}
-        <Card className="mt-6 border-0 shadow-card gradient-card">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl gradient-primary">
-                  <AlertCircle className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-foreground">
-                    Need assistance?
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    File a claim or add a new policy with just a few clicks
-                  </p>
-                </div>
+        <div className="mt-6 bg-card rounded-lg shadow-card gradient-card p-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl gradient-primary">
+                <AlertCircle className="w-6 h-6 text-primary-foreground" />
               </div>
-              <div className="flex gap-3">
-                <Link to="/policies">
-                  <Button variant="outline">Add Policy</Button>
-                </Link>
-                <Link to="/claims">
-                  <Button className="gradient-primary">File Claim</Button>
-                </Link>
+              <div>
+                <h3 className="font-heading font-semibold text-foreground">
+                  Need assistance?
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  File a claim or add a new policy with just a few clicks
+                </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="flex gap-3">
+              <Link to="/policies">
+                <button className="px-4 py-2 border border-input rounded-md hover:bg-secondary transition-colors font-medium">
+                  Add Policy
+                </button>
+              </Link>
+              <Link to="/claims">
+                <button className="px-4 py-2 gradient-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity font-medium">
+                  File Claim
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
