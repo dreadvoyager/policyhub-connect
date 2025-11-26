@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 @layer base {
   :root {
@@ -104,11 +104,11 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-[hsl(var(--border))];
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-sans antialiased;
     font-family: 'Inter', sans-serif;
   }
 
@@ -123,7 +123,7 @@
   }
 
   .gradient-card {
-    @apply bg-gradient-to-br from-card via-card to-secondary/30;
+    @apply bg-gradient-to-br from-[hsl(var(--card))] via-[hsl(var(--card))] to-[hsl(var(--secondary))]/30;
   }
 
   .card-hover {
@@ -131,7 +131,7 @@
   }
 
   .glass-effect {
-    @apply backdrop-blur-md bg-card/80;
+    @apply backdrop-blur-md bg-[hsl(var(--card))]/80;
   }
 
   .status-active {
@@ -143,19 +143,28 @@
   }
 
   .status-rejected {
-    @apply bg-destructive/10 text-destructive border border-destructive/20;
+    @apply bg-[hsl(var(--destructive))]/10 text-[hsl(var(--destructive-foreground))] border border-[hsl(var(--destructive))]/20;
   }
 
   .status-lapsed {
-    @apply bg-muted text-muted-foreground border border-border;
+    @apply bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))] border border-[hsl(var(--border))];
   }
 
   .input-focus {
-    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200;
+    @apply focus:ring-2 focus:ring-[hsl(var(--ring))]/20 focus:border-[hsl(var(--ring))] transition-all duration-200;
   }
 
   .page-transition {
-    @apply animate-fade-in;
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
